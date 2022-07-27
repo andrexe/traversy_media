@@ -1,10 +1,22 @@
-import { ButtonType } from './theme'
+import PropTypes from 'prop-types'
+import { ButtonBasic, ButtonType } from './theme'
 
-const Button = ({ type, text, classes }) => {
-    const classNames = ButtonType[type] + " " + classes;
+const Button = ({ type, text, classes, onClick }) => {
+  const classNames = ButtonBasic + " " + ButtonType[type] + " " + classes;
   return (
-    <button className={classNames}>{text}</button>
+    <button
+      className={classNames}
+      onClick={onClick}
+    >
+      {text}
+    </button>
   )
 }
+
+Button.propTypes = {
+  text: PropTypes.string.isRequired,
+  onClick: PropTypes.func
+}
+
 
 export default Button

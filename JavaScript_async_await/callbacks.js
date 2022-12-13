@@ -21,14 +21,15 @@ function getPosts() {
 }
 
 // Simulate creating a post and sending it to a server, which takes 2 second(s)
-function createPost(post) {
+function createPost(post, callback) {
     setTimeout(() => {
         posts.push(post);
+        callback();
     }, 2000);
 }
 
-getPosts();
+// getPosts();
 
-createPost({ title: 'Post 3', body: 'This is post 3'});
+createPost({ title: 'Post 3', body: 'This is post 3'}, getPosts);
 
 // The DOM was already painted by the time the third post was created. Since loading the posts took less time than creating the third one, we only see the first two.

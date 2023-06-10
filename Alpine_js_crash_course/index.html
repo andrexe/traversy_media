@@ -1,39 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Alpine.js Crash Course</title>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        [x-cloak] {
-            display: none;
-        }
+      [x-cloak] {
+        display: none;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container mx-auto mt-6 max-w-md">
-        <h1 class="font-bold text-4xl mb-4">Alpine.js Crash Course</h1>
-        <!-- x-data -->
-        <div x-data="{open: false, name: 'Andrei'}">
-            <!-- x-on -->
-            <button x-on:click="open = !open " class="bg-slate-700 text-white px-4 py-2 rounded-md">Toggle</button>
-            <!-- x-show & x-cloak -->
-            <div x-show="open" x-cloak>
-                <p class="bg-gray-200 p-4 my-6 rounded">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius cupiditate dolores, laborum cumque ipsa delectus ad optio ratione rerum minus eligendi modi quae facere quos tempore, animi inventore natus recusandae?
-                </p>
-            </div>
-            <!-- x-text -->
-            <div class="my-4">
-                Hello, <span class="font-bold" x-text="name"></span>
-            </div>
+      <h1 class="font-bold text-4xl mb-4">Alpine.js Crash Course</h1>
+
+      <!-- x-data -->
+      <div
+        x-data="{
+          open: false,
+          name: 'Andrei',
+          search: '',
+          posts: [
+            {title: 'Post one'},
+            {title: 'Post two'},
+            {title: 'Post three'},
+            {title: 'Post four'},
+          ]
+        }"
+      >
+        <!-- x-on & x-bind -->
+        <button
+          x-on:click="open = !open"
+          x-bind:class="open ? 'bg-red-800' : 'bg-blue-800'"
+          x-text="open ? 'Close' : 'Open'"
+          class="text-white px-4 py-2 rounded-md"
+        >
+          Toggle
+        </button>
+
+        <!-- x-show & x-cloak & x-transition -->
+        <div x-show="open" x-cloak x-transition.duration.500ms>
+          <p class="bg-gray-200 p-4 my-6 rounded">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius
+            cupiditate dolores, laborum cumque ipsa delectus ad optio ratione
+            rerum minus eligendi modi quae facere quos tempore, animi inventore
+            natus recusandae?
+          </p>
         </div>
+
+        <!-- x-text -->
+        <div class="my-4">
+          Hello, <span class="font-bold" x-text="name"></span>
+        </div>
+
+        <!-- x-effect does the action every time the state changes, in this case every time we click the button and open changes -->
+        <div x-effect="console.log(open)"></div>
+
+        <!-- x-model -->
+        <input
+          x-model="search"
+          type="text"
+          class="border p-2 w-full mb-2 mt-6"
+          placeholder="Search..."
+        />
+        <p x-show="search">
+          Searching for:
+          <span x-text="search" class="font-bold"></span>
+        </p>
+
+        <!-- x-if -->
+        <template x-if="open">
+          <div class="bg-gray-200 p-2 mt-8">Template based on condition.</div>
+        </template>
+
+        <!-- x-for -->
+        <h3 class="text-2xl mt-6 mb-3 font-bold">Posts</h3>
+        <template x-for="post in posts">
+          <div x-text="post.title"></div>
+        </template>
+
+        <button
+          @click="posts.push({title: 'New Post'})"
+          class="bg-green-600 text-white px-4 py-2 rounded-md mt-4"
+        >
+          Add Post
+        </button>
+
+
+      </div>
     </div>
-
-</body>
-
+  </body>
 </html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpine.js Crash Course</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        [x-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mx-auto mt-6 max-w-md">
+        <h1 class="font-bold text-4xl mb-4">Alpine.js Crash Course</h1>
+        <!-- x-data -->
+        <div x-data="{open: false, name: 'Andrei'}">
+            <!-- x-on -->
+            <button x-on:click="open = !open " class="bg-slate-700 text-white px-4 py-2 rounded-md">Toggle</button>
+            <!-- x-show & x-cloak -->
+            <div x-show="open" x-cloak>
+                <p class="bg-gray-200 p-4 my-6 rounded">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius cupiditate dolores, laborum cumque ipsa delectus ad optio ratione rerum minus eligendi modi quae facere quos tempore, animi inventore natus recusandae?
+                </p>
+            </div>
+            <!-- x-text -->
+            <div class="my-4">
+                Hello, <span class="font-bold" x-text="name"></span>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

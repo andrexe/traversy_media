@@ -9,6 +9,7 @@
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
     ></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
       [x-cloak] {
         display: none;
@@ -92,7 +93,39 @@
           Add Post
         </button>
 
+        <!-- x-ref -->
+        <div class="my-6">
+          <div x-ref="text">Echo...</div>
+          <button
+            @click="$refs.text.innerText += 'Echo...'"
+            class="bg-black text-white px-4 py-2 rounded-md"
+          >
+            Echo
+          </button>
+          <button
+            @click="$refs.text.innerText = ''"
+            class="bg-red-800 text-white px-4 py-2 rounded-md"
+          >
+            Clear
+          </button>
+        </div>
 
+        <!-- x-html -->
+        <div x-html="(await axios.get('./partial.html')).data">...</div>
+
+        <!-- $el -->
+        <button x-on:click="$el.innerHTML = 'Hello World'" class="mt-4 p-4 border">Replace text</button>
+
+        <!-- x-init & x-watch -->
+        <div x-init="$watch('posts', value => console.log(value))">
+        </div>
+
+        <!-- $dispatch -->
+        <div @notify="alert('You have been notified')">
+          <button 
+          @click="$dispatch('notify')"
+          class="bg-green-700 text-white px-4 py-2 mt-4 rounded-md">Notify</button>
+        </div>
       </div>
     </div>
   </body>

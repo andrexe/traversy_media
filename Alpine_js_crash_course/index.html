@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Alpine.js Crash Course</title>
+    <!-- Alpine Plugins -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"
+    ></script>
     <script
       defer
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
@@ -114,19 +119,52 @@
         <div x-html="(await axios.get('./partial.html')).data">...</div>
 
         <!-- $el -->
-        <button x-on:click="$el.innerHTML = 'Hello World'" class="mt-4 p-4 border">Replace text</button>
+        <button
+          x-on:click="$el.innerHTML = 'Hello World'"
+          class="mt-4 p-4 border"
+        >
+          Replace text
+        </button>
 
         <!-- x-init & x-watch -->
-        <div x-init="$watch('posts', value => console.log(value))">
-        </div>
+        <div x-init="$watch('posts', value => console.log(value))"></div>
 
         <!-- $dispatch -->
         <div @notify="alert('You have been notified')">
-          <button 
-          @click="$dispatch('notify')"
-          class="bg-green-700 text-white px-4 py-2 mt-4 rounded-md">Notify</button>
+          <button
+            @click="$dispatch('notify')"
+            class="bg-green-700 text-white px-4 py-2 mt-4 rounded-md"
+          >
+            Notify
+          </button>
         </div>
+
+        <!-- $data -->
+        <button
+          @click="getLatestPost($data.posts)"
+          class="bg-orange-800 text-white mt-6 py-2 px-4 rounded-md"
+        >
+          Get latest post
+        </button>
+
+        <!-- x-mask -->
+        <div class="mt-4">
+          <h3 class="text-2xl mb-2">Enter a date:</h3>
+          <input
+          class="border w-full p-2"
+          x-mask="99/99/9999"
+          placeholder="MM/DD/YYYY" /></div>
       </div>
     </div>
+
+    <footer x-data class="text-center mt-10">
+      Copyright &copy; <span x-text="new Date().getFullYear()"></span>
+    </footer>
+
+    <script>
+      function getLatestPost(posts) {
+        console.log(posts.slice(-1).pop());
+      }
+    </script>
   </body>
 </html>

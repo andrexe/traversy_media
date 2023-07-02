@@ -43,10 +43,15 @@ export default {
 
       this.tasks = [...this.tasks, data]
     },
-    deleteTask(id) {
+    async deleteTask(id) {
       // we look through tasks and use find to find the first task with an id that matches the one we provided above, then use the text in that task to display the name of the task in the confirmation
       if (confirm(`Are you sure you want to delete ${this.tasks.find(task => task.id === id).text}?`)) {
-        this.tasks = this.tasks.filter((task) => task.id !== id)
+        const res = await fetch(`/api/tasks/${id}`, {
+          method: 'DELETE'
+        })
+
+        res.status === 200 ? (this.tasks = this.tasks.filter((task) => task.id !== id)) : alert('Error deleting tasks')
+
       }
     },
     toggleReminder(id) {

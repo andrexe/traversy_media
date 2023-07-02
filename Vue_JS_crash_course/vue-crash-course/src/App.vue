@@ -1,7 +1,9 @@
 <template>
   <div class="container">
-    <Header title="Task tracker" />
-    <AddTask @add-task="addTask" />
+    <Header @toggle-add-task="toggleAddTask" title="Task tracker" :showAddTask="showAddTask" />
+    <div v-if="showAddTask">
+      <AddTask @add-task="addTask" />
+    </div>
     <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" />
   </div>
 </template>
@@ -15,16 +17,20 @@ export default {
   name: "App",
   components: {
     Header,
-    Tasks, 
+    Tasks,
     AddTask
   },
   data() {
     return {
-      tasks: []
+      tasks: [],
+      showAddTask: false,
     }
   },
   methods: {
-    addTask(task){
+    toggleAddTask() {
+      this.showAddTask = !this.showAddTask;
+    },
+    addTask(task) {
       this.tasks = [...this.tasks, task]
     },
     deleteTask(id) {
@@ -34,7 +40,7 @@ export default {
       }
     },
     toggleReminder(id) {
-      this.tasks = this.tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task)
+      this.tasks = this.tasks.map((task) => task.id === id ? { ...task, reminder: !task.reminder } : task)
     }
   },
   created() {

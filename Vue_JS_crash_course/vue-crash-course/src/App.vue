@@ -1,19 +1,22 @@
 <template>
   <div class="container">
     <Header title="Task tracker" />
+    <AddTask @add-task="addTask" />
     <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" />
   </div>
 </template>
 
 <script>
 import Header from "./components/Header.vue";
-import Tasks from "./components/Tasks.vue"
+import Tasks from "./components/Tasks.vue";
+import AddTask from "./components/AddTask.vue";
 
 export default {
   name: "App",
   components: {
     Header,
-    Tasks
+    Tasks, 
+    AddTask
   },
   data() {
     return {
@@ -21,6 +24,9 @@ export default {
     }
   },
   methods: {
+    addTask(task){
+      this.tasks = [...this.tasks, task]
+    },
     deleteTask(id) {
       // we look through tasks and use find to find the first task with an id that matches the one we provided above, then use the text in that task to display the name of the task in the confirmation
       if (confirm(`Are you sure you want to delete ${this.tasks.find(task => task.id === id).text}?`)) {
@@ -92,6 +98,11 @@ body {
   cursor: pointer;
   font-size: 1rem;
   font-family: inherit;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
 }
 
 .btn:hover {

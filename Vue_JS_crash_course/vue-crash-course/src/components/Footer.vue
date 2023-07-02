@@ -3,7 +3,10 @@
         <p>
             Copyright &copy; {{ this.getYearFromDate(new Date()) }}
         </p>
-        <a href="/about">About</a>
+        <nav class="nav">
+            <router-link to="/">Home</router-link>
+            <router-link to="/about">About</router-link>
+        </nav>
     </footer>
 </template>
 
@@ -22,6 +25,12 @@ export default {
 footer {
     margin-top: 2rem;
     text-align: center;
+}
+
+nav {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
 }
 
 a {
